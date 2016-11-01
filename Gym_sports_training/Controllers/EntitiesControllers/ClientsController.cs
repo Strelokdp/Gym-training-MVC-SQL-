@@ -16,9 +16,41 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         private GymContext db = new GymContext();
 
         // GET: Clients
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.Clients.ToList());
+            var sortedClients = from s in db.Clients
+                                select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                int flag = 0;
+                if (searchString.Contains("0"))
+                    flag = 1;
+
+                if (searchString.Contains("@"))
+                    flag = 2;
+
+                switch (flag)
+                {
+                    case 0:
+                        sortedClients = from s in db.Clients
+                                        where s.LastName.Contains(searchString)
+                                        select s;
+                        break;
+                    case 1:
+                        sortedClients = from s in db.Clients
+                                        where s.PhoneNumber.Contains(searchString)
+                                        select s;
+                        break;
+                    case 2:
+                        sortedClients = from s in db.Clients
+                                        where s.EMail.Contains(searchString)
+                                        select s;
+                        break;
+                }
+
+            }            
+            return View(sortedClients);
         }
 
         // GET: Clients/Details/5

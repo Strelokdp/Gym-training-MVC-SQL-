@@ -9,16 +9,25 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Search by last name, e-mail or phone number: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
             Full Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EMail)
+            E-mail
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            Phone number
         </th>
         <th></th>
     </tr>
