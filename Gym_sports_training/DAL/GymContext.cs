@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using Gym_sports_training.Models.Entities;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Gym_sports_training.DAL
 {
