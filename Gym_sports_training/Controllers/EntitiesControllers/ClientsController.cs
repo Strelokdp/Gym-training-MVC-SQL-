@@ -49,8 +49,8 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
                         break;
                 }
 
-            }            
-            return View(sortedClients);
+            }
+            return View(sortedClients.ToList());
         }
 
         // GET: Clients/Details/5

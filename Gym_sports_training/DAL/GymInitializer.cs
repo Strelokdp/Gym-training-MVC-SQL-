@@ -32,8 +32,11 @@ namespace Gym_sports_training.DAL
 
             var trainingSessions = new List<TrainingSession>
             {
-                new TrainingSession { ClientId = 1, CoachId = 1, TrainingTimeStart = DateTime.Now },
-                new TrainingSession { ClientId = 2, CoachId = 2, TrainingTimeStart = DateTime.UtcNow }
+                new TrainingSession { ClientId = 1, CoachId = 1, TrainingTimeStart = DateTime.Now.AddDays(-10)},
+                new TrainingSession { ClientId = 2, CoachId = 2, TrainingTimeStart = DateTime.Now},
+                new TrainingSession { ClientId = 3, CoachId = 3, TrainingTimeStart = DateTime.Now.AddDays(10) },
+                new TrainingSession { ClientId = 1, CoachId = 3, TrainingTimeStart = DateTime.Now.AddDays(12) },
+                new TrainingSession { ClientId = 3, CoachId = 2, TrainingTimeStart = DateTime.Now.AddDays(-5) }
             };
 
             trainingSessions.ForEach(g => context.TrainingSessions.Add(g));

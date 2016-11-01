@@ -16,10 +16,15 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         private GymContext db = new GymContext();
 
         // GET: TrainingSessions
-        public ActionResult Index()
+        public ActionResult Index(string timeOrder)
         {
             var trainingSessions = db.TrainingSessions.Include(t => t.Client).Include(t => t.Coach);
-            return View(trainingSessions.ToList());
+            var sortedTrainings = from s in trainingSessions
+                                  select s;
+
+            sortedTrainings = sortedTrainings.OrderBy(s => s.TrainingTimeStart);
+            ViewBag.DateSortParm = sortedTrainings.OrderByDescending(s => s.TrainingTimeStart);
+            return View(sortedTrainings.ToList());
         }
 
         // GET: TrainingSessions/Details/5
