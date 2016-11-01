@@ -12,6 +12,7 @@ namespace Gym_sports_training.Models.Entities
         public string LastName { get; set; }
         public string EMail { get; set; }
         public string PhoneNumber { get; set; }
+        public virtual IEnumerable<TrainingSession> TrainingSessions
 
         public string FullName { get { return Name + LastName; } }
     }
