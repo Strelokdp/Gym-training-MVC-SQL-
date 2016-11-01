@@ -11,19 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.FullName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.FullName)
         </dd>
 
         <dt>
@@ -56,6 +48,28 @@
 
         <dd>
             @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dd>
+            <table class="table">
+                <tr>
+                    <th> Clients </th>
+                </tr>
+                @foreach (var item in Model.TrainingSessions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Client.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Client.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrainingTimeStart)
+                        </td>
+                    </tr>
+                }
+            </table>
         </dd>
 
     </dl>

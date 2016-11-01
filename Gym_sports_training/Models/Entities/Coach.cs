@@ -22,7 +22,7 @@ namespace Gym_sports_training.Models.Entities
         public int Price { get; set; }
         public int TrainingLength { get; set; }
         public string Description { get; set; }
-        public virtual IEnumerable<TrainingSession> TrainingSessions { get; set; }
+        public virtual List<TrainingSession> TrainingSessions { get; set; }
 
         public string FullName { get { return Name + " " + LastName; } }
     }
