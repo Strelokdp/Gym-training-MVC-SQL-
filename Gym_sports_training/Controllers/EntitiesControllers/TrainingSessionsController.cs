@@ -39,17 +39,6 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
             return View(trainingSessions.ToList());
         }
 
-        //public ActionResult Index(string timeOrder)
-        //{
-        //    var trainingSessions = db.TrainingSessions.Include(t => t.Client).Include(t => t.Coach);
-        //    var sortedTrainings = from s in trainingSessions
-        //                          select s;
-
-        //    sortedTrainings = sortedTrainings.OrderBy(s => s.TrainingTimeStart);
-        //    ViewBag.DateSortParm = sortedTrainings.OrderByDescending(s => s.TrainingTimeStart);
-        //    return View(sortedTrainings.ToList());
-        //}
-
         // GET: TrainingSessions/Details/5
         public ActionResult Details(int? id)
         {
