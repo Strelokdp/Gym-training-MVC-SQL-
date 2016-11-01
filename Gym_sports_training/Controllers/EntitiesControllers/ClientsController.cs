@@ -91,12 +91,18 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         }
 
         // GET: Clients/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
+            }
+
             Client client = db.Clients.Find(id);
             if (client == null)
             {
@@ -110,9 +116,17 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Client client = db.Clients.Find(id);
-            db.Clients.Remove(client);
-            db.SaveChanges();
+            try
+            {
+                Client client = db.Clients.Find(id);
+                db.Clients.Remove(client);
+                db.SaveChanges();
+            }
+            catch
+            {
+                // Log the error (uncomment dex variable name and add a line here to write a log.
+                return RedirectToAction("Delete", new { id = id, saveChangesError = true });
+            }
             return RedirectToAction("Index");
         }
 

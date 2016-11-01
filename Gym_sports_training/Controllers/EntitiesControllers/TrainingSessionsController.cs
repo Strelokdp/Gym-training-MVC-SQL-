@@ -100,12 +100,18 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         }
 
         // GET: TrainingSessions/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
+            }
+
             TrainingSession trainingSession = db.TrainingSessions.Find(id);
             if (trainingSession == null)
             {
@@ -119,9 +125,17 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TrainingSession trainingSession = db.TrainingSessions.Find(id);
-            db.TrainingSessions.Remove(trainingSession);
-            db.SaveChanges();
+            try
+            {
+                TrainingSession trainingSession = db.TrainingSessions.Find(id);
+                db.TrainingSessions.Remove(trainingSession);
+                db.SaveChanges();
+            }
+            catch
+            {
+                // Log the error (uncomment dex variable name and add a line here to write a log.
+                return RedirectToAction("Delete", new { id = id, saveChangesError = true });
+            }
             return RedirectToAction("Index");
         }
 
