@@ -24,7 +24,9 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 int flag = 0;
-                if (searchString.Contains("0"))
+                int temp;
+                bool test = Int32.TryParse(searchString, out temp);
+                if (test)
                     flag = 1;
 
                 if (searchString.Contains("@"))
