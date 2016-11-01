@@ -16,9 +16,26 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         private GymContext db = new GymContext();
 
         // GET: Coaches
-        public ActionResult Index()
+        public ActionResult Index(Speciality? coachSpeciality)
         {
-            return View(db.Coaches.ToList());
+            var coachSpecList = new List<Speciality?>();
+
+            var coaches = from c in db.Coaches
+                          select c;
+
+            var coachSpec = from c in db.Coaches
+                            orderby c.Speciality
+                            select c.Speciality;
+
+            coachSpecList.AddRange(coachSpec.Distinct());
+            ViewBag.coachSpeciality = new SelectList(coachSpecList);
+
+            if (coachSpeciality!=null)
+            {
+                coaches = coaches.Where(x => x.Speciality == coachSpeciality);
+            }
+
+            return View(coaches);
         }
 
         // GET: Coaches/Details/5
