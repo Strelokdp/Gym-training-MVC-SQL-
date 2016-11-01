@@ -16,16 +16,39 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         private GymContext db = new GymContext();
 
         // GET: TrainingSessions
-        public ActionResult Index(string timeOrder)
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.PhoneSortParm = String.IsNullOrEmpty(sortOrder) ? "phone_desc" : "";
+            ViewBag.TrainingStartSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             var trainingSessions = db.TrainingSessions.Include(t => t.Client).Include(t => t.Coach);
-            var sortedTrainings = from s in trainingSessions
-                                  select s;
-
-            sortedTrainings = sortedTrainings.OrderBy(s => s.TrainingTimeStart);
-            ViewBag.DateSortParm = sortedTrainings.OrderByDescending(s => s.TrainingTimeStart);
-            return View(sortedTrainings.ToList());
+            switch (sortOrder)
+            {
+                case "phone_desc":
+                    trainingSessions = trainingSessions.OrderByDescending(s => s.Client.PhoneNumber);
+                    break;
+                case "Date":
+                    trainingSessions = trainingSessions.OrderBy(s => s.TrainingTimeStart);
+                    break;
+                case "date_desc":
+                    trainingSessions = trainingSessions.OrderByDescending(s => s.TrainingTimeStart);
+                    break;
+                default:
+                    trainingSessions = trainingSessions.OrderBy(s => s.Client.PhoneNumber);
+                    break;
+            }
+            return View(trainingSessions.ToList());
         }
+
+        //public ActionResult Index(string timeOrder)
+        //{
+        //    var trainingSessions = db.TrainingSessions.Include(t => t.Client).Include(t => t.Coach);
+        //    var sortedTrainings = from s in trainingSessions
+        //                          select s;
+
+        //    sortedTrainings = sortedTrainings.OrderBy(s => s.TrainingTimeStart);
+        //    ViewBag.DateSortParm = sortedTrainings.OrderByDescending(s => s.TrainingTimeStart);
+        //    return View(sortedTrainings.ToList());
+        //}
 
         // GET: TrainingSessions/Details/5
         public ActionResult Details(int? id)
