@@ -11,7 +11,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@using (Html.BeginForm("Index", "Client", FormMethod.Get))
+@using (Html.BeginForm("Index", "TrainingSessions", FormMethod.Get))
 {
     <p>
         Find by phone number: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)

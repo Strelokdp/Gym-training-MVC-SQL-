@@ -10,7 +10,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Clients", FormMethod.Get))
 {
     <p>
         Search by last name, e-mail or phone number: @Html.TextBox("SearchString")
