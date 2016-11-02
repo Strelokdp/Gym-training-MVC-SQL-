@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Gym_sports_training.DAL;
 using Gym_sports_training.Models.Entities;
+using PagedList;
 
 namespace Gym_sports_training.Controllers.EntitiesControllers
 {
@@ -16,11 +17,29 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         private GymContext db = new GymContext();
 
         // GET: TrainingSessions
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.PhoneSortParm = String.IsNullOrEmpty(sortOrder) ? "phone_desc" : "";
             ViewBag.TrainingStartSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             var trainingSessions = db.TrainingSessions.Include(t => t.Client).Include(t => t.Coach);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                trainingSessions = trainingSessions.Where(s => s.Client.PhoneNumber.Contains(searchString));
+            }
             switch (sortOrder)
             {
                 case "phone_desc":
@@ -36,7 +55,10 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
                     trainingSessions = trainingSessions.OrderBy(s => s.Client.PhoneNumber);
                     break;
             }
-            return View(trainingSessions.ToList());
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(trainingSessions.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: TrainingSessions/Details/5
