@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Gym_sports_training.DAL;
 using Gym_sports_training.Models.Entities;
+using PagedList;
 
 namespace Gym_sports_training.Controllers.EntitiesControllers
 {
@@ -16,8 +17,22 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
         private GymContext db = new GymContext();
 
         // GET: Clients
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.SortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             var sortedClients = from s in db.Clients
                                 select s;
 
@@ -52,7 +67,21 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
                 }
 
             }
-            return View(sortedClients.ToList());
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    sortedClients = sortedClients.OrderByDescending(s => s.LastName);
+                    break;
+                default:  
+                    sortedClients = sortedClients.OrderBy(s => s.LastName);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(sortedClients.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Clients/Details/5

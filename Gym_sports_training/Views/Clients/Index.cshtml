@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Gym_sports_training.Models.Entities.Client>
+﻿@model PagedList.IPagedList<Gym_sports_training.Models.Entities.Client>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 
 @{
     ViewBag.Title = "The list of clients";
@@ -13,7 +16,7 @@
 @using (Html.BeginForm("Index", "Clients", FormMethod.Get))
 {
     <p>
-        Search by last name, e-mail or phone number: @Html.TextBox("SearchString")
+        Search by last name, e-mail or phone number: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
@@ -21,7 +24,7 @@
 <table class="table">
     <tr>
         <th>
-            Full Name
+            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.SortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             E-mail
@@ -52,3 +55,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
