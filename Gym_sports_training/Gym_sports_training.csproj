@@ -214,6 +214,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611060906286_InitialCreate.cs" />
+    <Compile Include="Migrations\201611060906286_InitialCreate.Designer.cs">
+      <DependentUpon>201611060906286_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611060919232_DataAnnotations.cs" />
+    <Compile Include="Migrations\201611060919232_DataAnnotations.Designer.cs">
+      <DependentUpon>201611060919232_DataAnnotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Client.cs" />
     <Compile Include="Models\Entities\Coach.cs" />
@@ -310,6 +319,14 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611060906286_InitialCreate.resx">
+      <DependentUpon>201611060906286_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611060919232_DataAnnotations.resx">
+      <DependentUpon>201611060919232_DataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
