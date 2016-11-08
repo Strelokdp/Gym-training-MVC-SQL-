@@ -33,6 +33,7 @@
         <th></th>
     </tr>
 
+
     @foreach (var item in Model)
     {
         <tr>
@@ -40,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.Client.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Coach.FullName)
+                @Html.ActionLink(item.Coach.FullName, "CoachDetails", new { id = item.Coach.Id }) 
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TrainingTimeStart)

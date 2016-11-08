@@ -61,6 +61,11 @@ namespace Gym_sports_training.Controllers.EntitiesControllers
             return View(trainingSessions.ToPagedList(pageNumber, pageSize));
         }
 
+        public RedirectResult CoachDetails(int? id)
+        {
+            return Redirect("http://localhost:61467/Coaches/Details/" + id);
+        }
+
         // GET: TrainingSessions/Details/5
         public ActionResult Details(int? id)
         {
