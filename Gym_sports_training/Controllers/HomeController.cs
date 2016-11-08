@@ -16,27 +16,9 @@ namespace Gym_sports_training.Controllers
         private GymContext db = new GymContext();
 
         // GET: TrainingSessions
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index()
         {
-            ViewBag.PhoneSortParm = String.IsNullOrEmpty(sortOrder) ? "phone_desc" : "";
-            ViewBag.TrainingStartSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            var trainingSessions = db.TrainingSessions.Include(t => t.Client).Include(t => t.Coach);
-            switch (sortOrder)
-            {
-                case "phone_desc":
-                    trainingSessions = trainingSessions.OrderByDescending(s => s.Client.PhoneNumber);
-                    break;
-                case "Date":
-                    trainingSessions = trainingSessions.OrderBy(s => s.TrainingTimeStart);
-                    break;
-                case "date_desc":
-                    trainingSessions = trainingSessions.OrderByDescending(s => s.TrainingTimeStart);
-                    break;
-                default:
-                    trainingSessions = trainingSessions.OrderBy(s => s.Client.PhoneNumber);
-                    break;
-            }
-            return View(trainingSessions.ToList());
+            return Redirect("http://localhost:61467/TrainingSessions");
         }        
 
         protected override void Dispose(bool disposing)
