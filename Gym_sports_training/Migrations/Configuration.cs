@@ -3,7 +3,7 @@ namespace Gym_sports_training.Migrations
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
+    using System.Linq;  
 
     internal sealed class Configuration : DbMigrationsConfiguration<Gym_sports_training.DAL.GymContext>
     {

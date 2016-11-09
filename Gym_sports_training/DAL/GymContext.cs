@@ -23,5 +23,7 @@ namespace Gym_sports_training.DAL
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public System.Data.Entity.DbSet<Gym_sports_training.Models.Entities.Contact> Contacts { get; set; }
     }
 }
